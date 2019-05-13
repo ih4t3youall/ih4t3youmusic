@@ -14,14 +14,14 @@ app.get('/scrape', function(req, res){
 	//url = 'http://www.fabio.com.ar';
 	url = 'https://www.youtube.com/results?search_query=polkageist';
 
-//	yt-simple-endpoint style-scope ytd-video-renderer
+	//	yt-simple-endpoint style-scope ytd-video-renderer
 
 	request(url, function(error, response, html){
 		if(!error){
 			var $ = cheerio.load(html);
 			//$('.vve-check').filter(function(index,item){
 			//yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-2 yt-uix-sessionlink      spf-link
-			$('.yt-lockup.yt-lockup-tile.yt-lockup-video.vve-check.clearfix').filter(function(index,item){
+			$('.yt-lockup.yt-lockup-tile.yt-lockup-video.vve-check.clearfix').each(function(index,item){
 				var searchPage =$(this).html();
 				$ = cheerio.load(searchPage);
 				$('a').each(function (index,item){
@@ -31,35 +31,32 @@ app.get('/scrape', function(req, res){
 					}
 				});
 			});
+			saveToFile();
 		}
 	})
 })
 
-app.get('/results', function(req,res){
 
+function saveToFile(){
 	for (var se of videoUrls ){
 		myVariable+= se;	
 	}
+	fs.unlink('othermessage.txt', (err) => {
+		if (err) throw err;
+		console.log('successfully deleted /tmp/hello');
 
-	fs.writeFile('othermessage.txt',myVariable,(err)=>{
-		if(err){
-			console.log("error");
-		}else{
-			console.log("written");
-		}
+		fs.writeFile('othermessage.txt',myVariable,(err)=>{
+			if(err){
+				console.log("error");
+			}else{
+				console.log("written");
+				videoUrls.clear();
+				myVariable = "";
+			}
 
+		});
 	});
-});
 
-app.get('/raton', function(req,res){
-console.log('martin');
-
-
-});
-
-function callme(arr){
-	console.log("printing");
-	arr.forEach(x => console.log(x));
 }
 
 console.log('magic starts');
