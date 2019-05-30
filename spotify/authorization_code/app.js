@@ -6,7 +6,7 @@
  * For more information, read
  * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
  */
-
+const config = require('config');
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var cors = require('cors');
@@ -14,10 +14,9 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var fs = require('fs');
 
-var client_id = 'b15664fe4eb845fcba07e1eddb2185ce'; // Your client id
-var client_secret = '38ca5fbc68594e4e84b40a0dcb13f89c'; // Your secret
-var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
-
+var client_id =config.get('client_id'); // Your client id
+var client_secret = config.get('client_secret'); // Your secret
+var redirect_uri = config.get('redirect_uri'); // Your redirect uri
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string

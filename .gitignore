@@ -1,4 +1,7 @@
 spotify/node_modules
+spotify/authorization_code/config/default.json
+mercadolibreAPI/node_modules
+mercadolibreAPI/config/default.json
 youtube/webscrapper/node_modules
 *.swp
 *.swo
